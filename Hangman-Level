@@ -1,0 +1,9 @@
+public abstract class HangmanEasy
+{
+    // instance variables - replace the example below with your own
+    private int x;
+    public void easy()
+    {
+        tries = 3;
+    }
+}
