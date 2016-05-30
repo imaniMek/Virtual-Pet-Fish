@@ -1,0 +1,9 @@
+public class LegL implements BodyParts
+{
+    // instance variables - replace the example below with your own
+    private int x; 
+    public void drawPart()
+    {
+        System.out.print("\f O\n/|\\\n/");
+    }
+}
