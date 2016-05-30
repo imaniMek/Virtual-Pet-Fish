@@ -1,0 +1,21 @@
+public class GameRules
+{
+    // instance variables - replace the example below with your own
+    private int x;
+    
+    /**
+     * Constructor for objects of class GameRules
+     */
+        public void GameRules()
+    {
+        System.out.print("\f");
+        System.out.println("First have your friend enter a word that you will guess.");
+        System.out.println("Second you will put in a letter");
+        System.out.println("If you guess a correct letter, that letter will show up on the blank space");
+        System.out.println("If you guess incorrect your tries will go down by one and a body part will be drawn");
+        System.out.println("Once your tries reaches zero and the body is fully drawn you will lose the game");
+        System.out.println("At anytime during the game, you can guess the FULL word, not just part of it");
+        System.out.println("If you guess the word or all the correct letters, you win the game!");
+        System.out.println("Have fun!");
+    }
+}
