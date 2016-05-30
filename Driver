@@ -1,0 +1,36 @@
+import java.awt.*;
+import java.awt.GridBagLayout;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.border.EmptyBorder;
+
+public class Pet_Fish_Driver
+{
+
+    public static void main(String [] args)
+    {
+        EventQueue.invokeLater(new Runnable(){
+                @Override
+
+                public void run(){
+                    try{
+                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    Use_PF_Interface petfish = new Use_PF_Interface();
+                    petfish.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    petfish.pack();
+                    petfish.setLocationRelativeTo(null);
+                    petfish.setVisible(true);
+
+                }
+            });
+    }
+}
