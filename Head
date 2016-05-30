@@ -1,0 +1,12 @@
+public class Head implements BodyParts
+{
+    // instance variables - replace the example below with your own
+    private int x;
+    /**
+     * Constructor for objects of class DrawHead
+     */
+    public void drawPart()
+    {
+        System.out.print("O");
+    }
+}
