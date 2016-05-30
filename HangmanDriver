@@ -1,0 +1,8 @@
+public class HangmanDriver
+{
+    public static void main (String [] args)
+    {
+        Hangman sq = new Hangman();
+        sq.display();
+    }
+}
