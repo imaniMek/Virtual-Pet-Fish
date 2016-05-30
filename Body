@@ -1,0 +1,7 @@
+public class Body implements BodyParts
+{
+    public void drawPart()
+    {
+        System.out.print("\fO\n|");
+    }
+}
