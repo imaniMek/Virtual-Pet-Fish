@@ -1,0 +1,9 @@
+public class ArmR implements BodyParts
+{
+    // instance variables - replace the example below with your own
+    private int x;
+    public void drawPart()
+    {
+        System.out.print("\fO\n|\\ ");
+    }
+}
