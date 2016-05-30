@@ -1,0 +1,161 @@
+import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.EventQueue;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.awt.BorderLayout;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.*;
+
+public class Use_PF_Interface extends JFrame implements KeyListener
+{
+    // instance variables - replace the example below with your own
+    private JFrame window;
+    private JPanel backgroundPanel;
+    private JLabel lblBackgroundImage = new JLabel();
+    private JLabel fishPicture = new JLabel();
+    private JLabel instructions = new JLabel();
+
+    private int counter = 0, total, incrementer = 10;
+
+    /**
+     * This method will create frame window.
+     * @pre none
+     * @return tic tac toe game
+     * @param none
+     * @post none
+     */
+    public Use_PF_Interface()
+    {
+        setTitle("Virtual Pet Fish");
+        setSize(400, 400);
+        setResizable(false);
+        //initializes panels and panel layout
+        backgroundPanel = new JPanel();
+        backgroundPanel.setOpaque(false); 
+        backgroundPanel.setLayout(new FlowLayout());
+
+        lblBackgroundImage.setLayout(new FlowLayout());
+        fishPicture.setLayout(new FlowLayout());
+        instructions.setLayout(new FlowLayout());
+
+        //adds fish animation
+        fishPicture.setOpaque(false);
+        fishPicture.setIcon(new ImageIcon("REALFISHIE.jpg"));
+        fishPicture.setLayout(new BorderLayout()); 
+        fishPicture.setBounds(80, 0, 400 , 400);
+        
+        //sets background
+        lblBackgroundImage.setIcon(new ImageIcon("OCEAN2.jpg"));
+        lblBackgroundImage.setLayout(new BorderLayout()); 
+        lblBackgroundImage.setBounds(0, 0, 400, 400);
+
+        //instructin label
+        JLabel instructions = new JLabel("Press 1 to play tic tac toe. Press 2 to play hangman.");
+        instructions.setFont(new Font("Harrington", Font.PLAIN, 16));
+        instructions.setLayout(new BorderLayout()); 
+        instructions.setBounds(0, -150, 400, 400);
+        
+        //adds labels to panel
+        add(instructions);
+        add(fishPicture);
+        add(lblBackgroundImage);
+
+        addKeyListener(this);
+        setFocusTraversalKeysEnabled(false);
+    }//creates jframe window
+
+    /**
+     *key listener
+     * 
+     * param none
+     * return none
+     */
+    public void keyPressed(KeyEvent e)
+    {
+
+        if(e.getKeyCode() == KeyEvent.VK_1)
+        {
+            //calls tic tac toe game, and point counter
+            TicTacToe tic = new TicTacToe();
+            TicTacToeDriver.main(null);
+            PointCounter();
+        }
+
+        else if(e.getKeyCode() == KeyEvent.VK_2)
+        {
+            //calls hanman game, and point counter
+            Hangman hang = new Hangman();
+            HangmanDriver.main(null);
+            PointCounter();
+        }
+    }
+
+    /**
+     * key release method
+     * 
+     * param none
+     * return none
+     */
+    public void keyReleased(KeyEvent e)
+    {
+        //do nothing
+    }//key relase event
+
+    /**
+     * key typed method
+     * 
+     * param none
+     * return none
+     */
+    public void keyTyped(KeyEvent e)
+    {
+        //do nothing
+    }//key typed event
+
+    /**
+     * keeps track of points accumilated
+     * 
+     * param none
+     * return none
+     */
+    public void PointCounter()
+    {
+
+        counter += 5;
+
+        if(counter == incrementer)
+        {
+            incrementer += 10;
+            JLabel upDatedCounter = new JLabel(counter + "/" + incrementer);
+            upDatedCounter.setFont(new Font("Harrington", Font.PLAIN, 16));
+            upDatedCounter.setLayout(new FlowLayout()); 
+            upDatedCounter.setBounds(0, -200, 400, 400);
+            upDatedCounter.setOpaque(false);
+            add(upDatedCounter);
+            
+            Integer counterTracker = new Integer(counter);
+        }//if counter equals incrementer, new level
+        else if(counter != incrementer)
+        {
+            JLabel upDatedCounter2 = new JLabel(counter +"/" + incrementer);
+            upDatedCounter2.setFont(new Font("Harrington", Font.PLAIN, 16));
+            upDatedCounter2.setLayout(new FlowLayout()); 
+            upDatedCounter2.setBounds(0, -200, 400, 400);
+            upDatedCounter2.setOpaque(false);
+            add(upDatedCounter2); 
+        }//if counter and incrementer are not equal add points to counter
+
+    }
+}//end of class
