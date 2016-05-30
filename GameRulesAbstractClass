@@ -1,0 +1,26 @@
+public abstract class Welcome extends GameRules
+{
+    String moveOn = new String();
+    /**
+     * An example of a method - replace this comment with your own
+     * 
+     * @param  y    a sample parameter for a method
+     * @return        the sum of x and y 
+     */
+    public void welcome()
+    {
+      System.out.print("Welcome to the hangman game\n");
+      System.out.print("Do you know how to play hangman?(1 for yes, 2 for no): ");
+    }
+    public void rules()
+    {
+        Scanner keyboard = new Scanner (System.in);
+        System.out.print("\fAlright then i'll tell ya how to play!(press any key and then enter to continue)");
+        moveOn = new String(keyboard.nextLine());
+        GameRules();
+    }
+    public void check()
+    {
+       System.out.print("If you understand press 1, this will start the game: "); 
+    }
+}
