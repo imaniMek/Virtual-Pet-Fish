@@ -1,0 +1,288 @@
+import java.util.Scanner;
+import java.lang.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.util.Random;
+import java.io.*;
+
+/**
+ * Write a description of class Hangman here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Hangman extends Welcome 
+{//Creating the spaces
+    Scanner keyboard = new Scanner (System.in);
+    String guess = new String();
+    String blank = "_";
+    String space = " ";
+    String word = new String();
+    //Creating the ArrayLists
+    ArrayList <String> guess_space = new ArrayList <String> (word.length());
+    ArrayList <String> word_list = new ArrayList <String> (word.length());
+    ArrayList <String> wrong = new ArrayList <String> (26);
+    ArrayList <BodyParts> hangman;
+    //creating variables
+    int tries = 6;
+    int stopper = 0;
+    int counter = 0;
+    int yes = 1;
+    int no = 2;
+    int answer = 0;
+    public void display()
+    {
+        hangman = new ArrayList<BodyParts>();
+        choice();
+        getWord();
+        getWord_List();
+        //checks to s   ee if you guesses matches the word that was provided
+        while(counter == 0 && tries > 0)
+        {  
+            printwrong();
+            fillGuessSpace();
+
+            //prints out the enter a letter screen
+            if (word_list.contains(" "))
+            {
+                guess = new String(" ");
+            }
+
+            else
+            {
+                System.out.println("Please enter a letter \t\t tries: " + tries);
+                guess = new String(keyboard.nextLine());
+                System.out.println();
+                System.out.print("Your body");
+                System.out.println();
+            }
+            //tells you how many attempts you have left
+            System.out.print("\f");
+            if(guess.equals(word))
+            {
+                counter += 1;
+            }
+            hangBody();
+            Iterator iter = hangman.iterator();
+            BodyParts currentPart;
+            while(iter.hasNext())
+            {
+                currentPart = (BodyParts)iter.next();
+                currentPart.drawPart();
+                //iter.next().drawPart();
+            }
+            while(word_list.contains(guess) && tries > 0)
+            {
+
+                //puts your letter into the guessspace    
+                if(word_list.contains(guess))
+                {
+                    int x;
+                    int y = 0;
+                    y++;
+                    x = word_list.indexOf(guess);
+                    guess_space.set(x, guess);
+                    word_list.set(x,blank);
+                    stopper += y;
+                }//ends if statement
+
+                //clears screen
+            }//ends while loop
+
+            if(stopper >= word.length())
+            {
+                counter += 1;
+            }//ends if statement
+
+        }//ends the while loop
+
+        //prints out a losing or winning message 
+        if (tries == 0)
+        {
+            System.out.print("\f O\n/|\\ \n/ \\ ");
+            System.out.print("You lose, don't come back, i dont waste my time with losers");
+        }
+
+        else//ends if statement
+        {
+            System.out.println();
+            System.out.print(word);
+            System.out.println();
+            System.out.print("Congratulations");
+        }//ends if statement
+
+    }//ends hangman method
+
+    public void choice()
+    {
+        welcome();
+        answer = keyboard.nextInt();
+        if(answer == no)
+        {
+            rules();
+            check();
+            answer = keyboard.nextInt();
+            if(answer == yes)
+            {
+                System.out.print("\f");
+                getWord();
+            }
+        }
+        else
+        {
+            getWord();
+        }
+    }
+
+    public void getWord()
+    {
+        
+        String animalFile = "animals.txt";
+        
+        String line = null;
+        
+        ArrayList<String> animals = new ArrayList<String>();
+        
+        try {
+            // reads in the text
+            FileReader fileReader = new FileReader(animalFile);
+
+            // saves data
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while((line = bufferedReader.readLine()) != null) {
+               animals.add(line);
+            }//continues if there is another line   
+
+            //closes file
+            bufferedReader.close();         
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println("Unable to open file '" + animalFile + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println("Error reading file '" + animalFile + "'");                  
+        }
+        
+        //creates a random number for array list
+        Random ran = new Random();
+        int x = ran.nextInt(animals.size());
+        
+        //word is assigned the random word
+        word = animals.get(x);
+        System.out.println(animals.get(x));
+       
+        word = word.toLowerCase();
+        System.out.print("\f");
+    }
+
+    public void getWord_List()
+    {
+        for(int y = 0; y < word.length(); y++)
+        {
+            char temp = word.charAt(y);
+            String temp2 = Character.toString(temp);
+            word_list.add(temp2);          
+        }
+    }
+
+    public void printwrong()
+    {
+        //checking to see how many tries there are left
+        System.out.println();
+        System.out.print("wrong letters " + wrong);
+        System.out.println();
+        System.out.println("\n\n");   
+    }
+
+    public void fillGuessSpace()
+    {
+        //creates blanks for your guesses
+        for(int x = 0; x < word.length(); x++)
+        {               
+            guess_space.add(blank);
+        } 
+
+        for(int x = 0; x < word.length(); x++)
+        {  
+            System.out.print(guess_space.get(x) + " ");
+        }   
+    }
+
+    public void hangBody()
+    {
+        if(wrong.contains(guess))
+        {
+            System.out.print("you already tried that, and it was wrong\n");
+        }//ends if statement
+
+        else if(!word.contains(guess))
+        {
+            wrong.add(guess);
+            tries--;     
+        }
+
+        if( tries == 5)
+        {
+            hangman.add(new Head());
+        }
+        if( tries == 4)
+        {
+            hangman.add(new Body());
+        }
+        if( tries == 3)
+        {
+            hangman.add(new ArmR());
+        }
+        if ( tries == 2)
+        {
+            hangman.add(new ArmL());
+        }
+        if( tries == 1)
+        {
+            hangman.add(new LegL());
+        }
+    }
+
+    public void drawBody()
+    {
+        if(wrong.contains(guess))
+        {
+            System.out.print("you already tried that, and it was wrong\n");
+        }//ends if statement
+
+        else if(!word.contains(guess))
+        {
+            wrong.add(guess);
+            tries--;     
+        }//ends if statement
+
+        if (tries == 5)
+        {    
+            System.out.print("O");
+        }//ends if statement
+
+        if (tries == 4)
+        {
+            System.out.print("O\n|");
+        }//ends if statement
+
+        if (tries == 3)
+        {
+            System.out.print("O\n|\\ ");
+        }//ends if statement
+
+        if (tries == 2)
+        {
+            System.out.print(" O\n/|\\ ");
+        }//ends if statement
+
+        if (tries == 1)
+        {
+            System.out.print(" O\n/|\\\n/");
+        }//ends if statement   
+    }
+}//ends Hangman class
